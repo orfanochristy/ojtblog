@@ -1,0 +1,22 @@
+{% block body %}
+  
+    <form method = "POST" action="">
+    	 {% csrf_token %}
+      
+      <h1>Post Blog</h1>
+	  		 {% for post in posts %}
+	  			
+	  			<p>{{post.author}}</p>
+	  			<p>{{post.date_created}}</p>
+	  			<p>{{post.title}}</p>
+	  			<p>{{post.slug}}</p>
+	  			<p>{{post.content}}</p>
+	  			<p>{{post.tags}}</p> 
+	  			<a href= "{% url 'editpost' post.id %}" >Edit</a>
+	  			<p>---------------------</p>
+			
+			{% endfor %}
+	  	
+
+
+{% endblock %}
