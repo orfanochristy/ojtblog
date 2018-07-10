@@ -30,3 +30,17 @@ def createpost(request):
 
 	#return render(request, 'blogs/createpost.html', {'form': form})
 		#form = Post()
+def editpost(request, post_id):
+	template = 'blogs/createpost.html'
+	post = Post.objects.get(id=post_id)
+	if request.method == 'POST':
+		data = request.POST.copy()
+		data["Post"]=request.post.id
+		form = PostForm(request.POST, instance = post)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('index'))
+		else:
+			return render(request, 'blogs/editpost.html', {"form": form})
+	else:
+		return render(request, 'blogs/editpost.html')
