@@ -1,0 +1,19 @@
+{% block content %}
+<form class = "col">
+	<div class="row">
+		<div>
+			{% for post in posts %}
+			<p>{{post.title}}</p>
+			<p>{{post.slug}}</p>
+			<p>{{post.author}}</p>
+   	        <p>{{ post.date_updated }}</p>
+   	   </div>
+			<p>{{post.content}}</p>
+			<p>#{{post.tags}}</p>
+			<p>-------------------------------------------------</p>
+			{% endfor %}
+	</div>
+</form>
+   
+{% endblock %}
+

@@ -1,3 +1,4 @@
+#<<<<<<< HEAD
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm
 from .models import Post
@@ -7,9 +8,25 @@ from django.utils import timezone
 
 def index(request):
 	context = {}
-	context['posts'] = Post.objects.filter(archive=False)
+	context['posts'] = Post.objects.filter(archive=False, slug='Published')
 	context['name'] = 'Posts'
 	return render(request, 'blogs/index.html', context)
+
+#def post_list(request):
+#   posts=Post.published.all()
+   
+#    template = 'blogs/post_list.html'
+#    object_list = Post.objects.filter(slug = 'Published')
+
+#    return render(request,template)
+#    return render(request, 'blog/post_list.html', {'posts':posts})
+
+#def base(request):
+#    context={}
+#    context['posts'] = Post.objects.all()
+#    context['title'] = 'Posts'
+#    return render(request, 'blogs/post_list.html', context)
+#--------------------------------------------------------------------------------
 
 def createpost(request):
 	form = PostForm()
@@ -56,3 +73,4 @@ def archivelist(request):
 	context['posts'] = Post.objects.filter(archive=True)
 	context['name'] = 'Posts'
 	return render(request, 'blogs/archivelist.html', context)
+#=======
