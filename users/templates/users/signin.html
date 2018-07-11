@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>
+        Blog Signin
+    </title>
+</head>
+<body>
+<form style="margin: 2% 70%; width:350px; padding: 5px; border:solid #555 2px;border-radius:10px " action="" method="post"  > {% csrf_token %} 
+    <h3 style="color:Blue"Login/h3>
+        {{form.as_p}}
+    <input type="submit" name='Signin' value="Signin"> 
+</form>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<html>
+<head>
+    <title>
+        Blog Register
+    </title>
+</head>
+<body>
+<form style="margin: 2% 70%; width:350px; padding: 5px; border:solid #555 2px;border-radius:10px " action="" method="post" enctype="multipart/form-data" > {% csrf_token %} 
+    <h3 style="color:Blue">Sign-Up Form</h3>
+        {{form.as_p}}
+    <input type="submit" name='register' value="register"> 
+</form>
+</body>
+</html>
