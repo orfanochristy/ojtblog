@@ -1,0 +1,21 @@
+
+{% block body %}
+  <form method = "POST" action="{% url 'createpost' %}" >
+    {% csrf_token %}
+    <div class="container">
+        
+    <h1>Create Blog</h1>
+
+    {{form.as_p}}
+      
+      <div class="clearfix">
+      <button type= "submit" class= "glyphicon glyphicon.save" name="add" value="add">Add Blog</button>
+
+      
+      </div>
+     
+    </div>
+
+   
+  </form>
+{% endblock %}
