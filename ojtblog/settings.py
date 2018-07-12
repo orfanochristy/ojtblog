@@ -111,6 +111,7 @@ STATICFILES_DIRS = [
 ]
 
 
+
 # Allow any settings to be defined in local_settings.py which should be
 # ignored in your version control system allowing for settings to be
 # defined per machine.

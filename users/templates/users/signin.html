@@ -1,3 +1,8 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+
+
+
 <html>
 <head>
     <title>
@@ -8,7 +13,7 @@
 <form style="margin: 2% 70%; width:350px; padding: 5px; border:solid #555 2px;border-radius:10px " action="" method="post"  > {% csrf_token %} 
     <h3 style="color:Blue"Login/h3>
         {{form.as_p}}
-    <input type="submit" name='Signin' value="Signin"> 
+    <input type="submit"  id="id_submit" name='Signin' value="Signin"> 
 </form>
 </body>
 </html>

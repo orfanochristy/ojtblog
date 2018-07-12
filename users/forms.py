@@ -14,6 +14,11 @@ class UserForm(forms.ModelForm):
         instance.save()
         return instance
 
+class UserImage(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=['image']
+
 
 class UserSignup(forms.Form):
     email=forms.EmailField(max_length=150,widget=forms.EmailInput)
