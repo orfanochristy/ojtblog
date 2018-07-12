@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import UserSignup, UserLogin, UserForm, EditProfileForm
+from . models import User
 from django.contrib.auth.forms import PasswordChangeForm
+from .forms import UserSignup, UserLogin, UserForm, EditProfileForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login,logout, authenticate
 from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse
-from .models import User
+
 
 def Register(request):
     form=UserSignup()
@@ -82,7 +83,8 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
 
         args = {'form': form}
-    return render(request, 'users/changepassword.html', args)
+        return render(request, 'users/changepassword.html', args)
+
 
 def home(request):
     return render(request,'users/home.html')
