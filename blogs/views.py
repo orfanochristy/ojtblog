@@ -8,30 +8,9 @@ from django.utils import timezone
 
 def index(request):
 	context = {}
-	context['posts'] = Post.objects.filter(archive=False, slug='Published')
+	context['posts'] = Post.objects.filter(archive=False)
 	context['name'] = 'Posts'
 	return render(request, 'blogs/index.html', context)
-
-
-#def post_list(request):
-
-#def post_list(request):
-
-#   posts=Post.published.all()
-   
-#    template = 'blogs/post_list.html'
-#    object_list = Post.objects.filter(slug = 'Published')
-
-
-#    return render(request,template)
-#    return render(request, 'blog/post_list.html', {'posts':posts})
-
-#def base(request):
-#    context={}
-#    context['posts'] = Post.objects.all()
-#    context['title'] = 'Posts'
-#    return render(request, 'blogs/post_list.html', context)
-#--------------------------------------------------------------------------------
 
 def createpost(request):
 	form = PostForm()
@@ -60,7 +39,7 @@ def editpost(request, post_id):
 		form =PostForm(instance=post)
 		args = {'form':form}
 		return render(request, 'blogs/editpost.html', args)
-=======
+
 
 def post_details(request, post_id):
     template = 'blogs/post_details.html'
@@ -106,11 +85,10 @@ def unarchivepost(request, post_id):
 	post = get_object_or_404(Post, id=post_id, author=request.user)
 	post.archive=False
 	post.save()
-	return HttpResponseRedirect(reverse('index'))
+	return HttpResponseRedirect(reverse('archivelist'))
 
 def archivelist(request):
 	context = {}
 	context['posts'] = Post.objects.filter(archive=True)
 	context['name'] = 'Posts'
 	return render(request, 'blogs/archivelist.html', context)
-#=======

@@ -10,8 +10,7 @@ urlpatterns = [
     path('archivepost/<int:post_id>/', views.archivepost, name='archivepost'),
     path('archivelist/', views.archivelist, name='archivelist'),
     path('unarchivepost/<int:post_id>/', views.unarchivepost, name='unarchivepost'),
-    path('search_form/', views.search_form, name='post_list'),
+    path('search_form/', views.search_form, name='search_form'),
 	path('search/', views.search, name="search"),
 	path('search_result/<int:post_id>/', views.search_result, name='search_result'),
 ]
-

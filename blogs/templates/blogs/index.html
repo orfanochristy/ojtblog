@@ -1,5 +1,12 @@
 {% block body %}
   
+  <div class = "col">
+	<form action="{% url 'search' %}" method = "GET">
+  
+  <input type="text" name="q" >
+  <input type="submit" value="Search">
+
+   </form> 
     <form method = "POST" action="">
     	 {% csrf_token %}
       
@@ -16,6 +23,7 @@
 	  			<p>{{post.tags}}</p> 
 	  			<a href= "{% url 'editpost' post.id %}" >Edit</a> 
 	  			<a href="{% url 'archivepost' post.id%} ">Archive</a>
+	  			<button type="button" onclick="window.location.href='{% url 'post_details' post.id %}'" >Details</button>
 	  			<p>---------------------</p>
 			
 			{% endfor %}
