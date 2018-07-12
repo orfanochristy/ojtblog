@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm
 from .models import Post
@@ -39,6 +40,41 @@ def editpost(request, post_id):
 		args = {'form':form}
 		return render(request, 'blogs/editpost.html', args)
 
+
+def post_details(request, post_id):
+    template = 'blogs/post_details.html'
+    
+    post= get_object_or_404(Post, id=post_id)
+    context = {'post':post,}
+
+    return render(request, template, context)
+
+def search_form(request):
+    return render(request, 'blogs/index.html')
+
+def search(request):
+    error = False
+    
+    if 'q' in request.GET:
+        q = request.GET['q']
+        if not q:
+            error = True
+        else:
+            posts = Post.objects.filter(title__icontains=q)
+            
+            return render(request, 'blogs/search_results.html', {'posts':posts, 'query':q}) 
+    
+    
+    return render(render, 'blogs/index.html', {'error': error})
+
+def search_result(request, post_id):
+    template = 'blogs/search_result.html'
+    
+    post= get_object_or_404(Post, id=post_id)
+    context = {'post':post,}
+
+    return render(request, template, context)
+
 def archivepost(request, post_id):
 	post = get_object_or_404(Post, id=post_id, author=request.user)
 	post.archive=True
@@ -49,7 +85,7 @@ def unarchivepost(request, post_id):
 	post = get_object_or_404(Post, id=post_id, author=request.user)
 	post.archive=False
 	post.save()
-	return HttpResponseRedirect(reverse('index'))
+	return HttpResponseRedirect(reverse('archivelist'))
 
 def archivelist(request):
 	context = {}

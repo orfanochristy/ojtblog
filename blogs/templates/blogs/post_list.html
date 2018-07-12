@@ -1,0 +1,26 @@
+
+{% block content %}
+<div class = "col">
+	<form action="{% url 'search' %}" method = "GET">
+  
+  <input type="text" name="q" >
+  <input type="submit" value="Search">
+
+   </form> 
+
+	<div class="row">
+			{% for post in posts %}
+			<p>{{post.title}}</p>
+			<p>{{post.author}}</p>
+   	        <p>Posted: {{ post.date_updated }}</p>
+			<p>{{post.content}}</p>
+			<p>#{{post.tags}}</p>
+			<button type="button" onclick="window.location.href='{% url 'post_details' post.id %}'" >Details</button>
+			
+			<p>-------------------------------------------------</p>
+			{% endfor %}
+	</div>
+</div>
+   
+{% endblock %}
+
