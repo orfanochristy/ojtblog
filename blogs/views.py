@@ -5,10 +5,11 @@ from .models import Post
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
+from django.db.models import Q
 
 def index(request):
 	context = {}
-	context['posts'] = Post.objects.filter(archive=False)
+	context['posts'] = Post.objects.filter(archive=False).order_by('-date_updated')
 	context['name'] = 'Posts'
 	return render(request, 'blogs/index.html', context)
 
@@ -57,12 +58,8 @@ def search(request):
     
     if 'q' in request.GET:
         q = request.GET['q']
-        if not q:
-            error = True
-        else:
-            posts = Post.objects.filter(title__icontains=q)
-            
-            return render(request, 'blogs/search_results.html', {'posts':posts, 'query':q}) 
+        posts = Post.objects.filter( Q(title__icontains=q) | Q(tags__icontains=q) | Q(content__icontains=q))
+        return render(request, 'blogs/search_results.html', {'posts':posts, 'query':q}) 
     
     
     return render(render, 'blogs/index.html', {'error': error})
@@ -92,3 +89,5 @@ def archivelist(request):
 	context['posts'] = Post.objects.filter(archive=True)
 	context['name'] = 'Posts'
 	return render(request, 'blogs/archivelist.html', context)
+
+

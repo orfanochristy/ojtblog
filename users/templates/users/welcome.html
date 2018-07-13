@@ -37,7 +37,11 @@
     <!-- header
     ================================================== -->
     <header class="s-header">
-
+        <div class="header-logo">
+            <a class="site-logo" href="index.html">
+                <img src="{% static 'images/logo.svg' %}" alt="Homepage">
+            </a>
+        </div>
         <nav class="header-nav">
 
             <a href="#0" class="header-nav__close" title="close"><span>Close</span></a>
@@ -48,6 +52,7 @@
                 <ul class="header-nav__list">
                     <li class="current"><a class="smoothscroll"  href="{% url 'home' %}" title="home">Home</a></li>
                     <li><a class="smoothscroll"  href="{% url 'profile' %}" title="Profile">Profile</a></li>
+                    <li><a class="smoothscroll"  href="{% url 'archivelist' %}" title="services">Archives</a></li>
                     <li><a class="smoothscroll"  href="{% url 'accountsettings' %}" title="Logout">Account Settings</a></li>
                     <li><a class="smoothscroll"  href="{% url 'Logout' %}" title="Logout">Logout</a></li>
                 </ul>
@@ -94,7 +99,6 @@
             <div class="row home-content__main">
                 <h1>
                 Welcome {{request.user.first_name}}<br>
-                </h1>
 
                 <p>
                 Share to everyone your ideas and experience <br>

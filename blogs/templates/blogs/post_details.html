@@ -11,8 +11,8 @@
         <p>{{post.title}}</p>
         <p>{{post.slug}}</p>
         <p>{{post.author}}</p>
-        <p>{{ post.date_created }}</p>
-        <p>{{ post.date_updated }}</p>
+        <p>Date Posted:{{ post.date_created }}</p>
+        <p>Date Updated:{{ post.date_updated }}</p>
         
         </div>
         <button type="button" onclick="window.location.href='{% url 'index' %}'" >Close</button>

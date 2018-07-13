@@ -7,11 +7,16 @@
    
         {% if posts %}           
             <p>Found {{ posts|length }} posts{{ post|pluralize }}.</p>
-            <ul>               
+                           
                 {% for post in posts %}               
-                <li><a href="{% url 'search_result' post.id %}">{{ post.title }}</a></li>               
+                <p>Title:</p> 
+                <a href="{% url 'search_result' post.id %}">{{ post.title }}</a></li>  
+                <p>Content:</p> 
+                <a href="{% url 'search_result' post.id %}">{{ post.content }}</a>   
+                <p>tags:</p>  
+                <a href="{% url 'search_result' post.id %}">{{ post.tags }}</a>                
                 {% endfor %}           
-            </ul>       
+                 
         {% else %}           
             <p>No posts matched your search criteria.</p>   
             <button type="button" onclick="window.location.href='{% url 'index' %}'" >Close</button>    
