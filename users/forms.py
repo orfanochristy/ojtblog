@@ -1,7 +1,8 @@
 from django import forms
-from .models import User
 from django.forms import ModelForm
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from .models import User
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -14,11 +15,10 @@ class UserForm(forms.ModelForm):
         instance.save()
         return instance
 
-class UserImage(forms.ModelForm):
+class EditProfileForm(forms.ModelForm):
     class Meta:
-        model=User
-        fields=['image']
-
+        model = User
+        fields = ('email', 'first_name', 'last_name','image')
 
 class UserSignup(forms.Form):
     email=forms.EmailField(max_length=150,widget=forms.EmailInput)

@@ -1,10 +1,11 @@
-from django.shortcuts import render
-from.forms import UserSignup, UserLogin, UserForm, UserImage
+from django.shortcuts import render, redirect
+from .forms import UserSignup, UserLogin, UserForm, EditProfileForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login,logout, authenticate
+from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse
 from .models import User
-from django.template import loader
 
 def Register(request):
     form=UserSignup()
@@ -18,10 +19,10 @@ def Register(request):
             if user is not None:
                 login(request, user)
                 if user.is_authenticated:
-                    return HttpResponseRedirect(reverse('Dashboard',args=(request.user.id,)))
+                    return HttpResponseRedirect(reverse('welcome'))
 
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('Dashboard',args=(request.user.id,)))
+        return HttpResponseRedirect(reverse('base'))
     else:                
         return render(request,'users/signup.html',{'form':form})
 
@@ -35,38 +36,56 @@ def Signin(request):
             user=form.sign_in()
             login(request,user)
             if user.is_authenticated:
-                return HttpResponseRedirect(reverse('Dashboard',args=(request.user.id,)))
+                return HttpResponseRedirect(reverse('welcome'))
     if request.user.is_authenticated:
-        return HttpResponseRedirect(reverse('Dashboard',args=(request.user.id,)))                
+        return HttpResponseRedirect(reverse('base'))                
     else:
         return render(request,'users/signin.html',{'form':form})
 
+def profile(request):
+    context = {}
+    context['users'] = User.objects.all()
+    context['name'] = 'Users'
+    return render(request, 'users/profile.html', context)
 
-def Dashboard(request,user_id):
-    if request.user.is_authenticated:
-        if request.method=='POST' and request.POST.get('Upload')=='Upload':
-            form=UserImage()
-            userid=User.objects.get(id=user_id)
-            data2=request.FILES.copy()
-            data2["image"]=request.FILES.get("user_image")
-            form=UserImage(data2,data2, instance=userid)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect(reverse('Dashboard',args=(request.user.id,)))    
-            else:
-                return HttpResponse(form.errors)
-        
-        if request.method=='POST' and request.POST.get('publish_blog')=='publish_blog':
-            blog_image=request.POST.copy()
-            blog_text=request.FILES.copy()
-            
-        return render(request,'users/dashboard.html')
-        #return HttpResponse(template.render(context,request))    
-    else:
-        return HttpResponseRedirect(reverse('Signin'))
-
+def welcome(request):
+    return render(request,'users/welcome.html')
     
+def editprofile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, files=request.FILES, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('profile'))
+    else:
+        form = EditProfileForm(instance=request.user)
+        args = {'form': form}
+    return render(request, 'users/accountsettings.html', args)
+
 def Logout(request):
     if request.user.is_authenticated:
         logout(request) 
-    return HttpResponseRedirect(reverse('Signin'))
+    return HttpResponseRedirect(reverse('base'))
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect(reverse('welcome'))
+        else:
+            return redirect(reverse('changepassword'))
+    else:
+        form = PasswordChangeForm(user=request.user)
+
+        args = {'form': form}
+    return render(request, 'users/changepassword.html', args)
+
+def home(request):
+    return render(request,'users/home.html')
+
+def base(request):
+    return render(request,'users/base.html')
