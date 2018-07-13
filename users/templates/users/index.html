@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>USER PROFILE</title>
+</head>
+
+<body>
+{% block body %}
+  <form method="POST">
+    <div class="container">
+    {% csrf_token %}
+    <h1>PROFILE</h1>
+    
+    <img src="{{ user.image.url }}" width="240">
+    <p>{{user.first_name}} {{user.last_name}}</p>
+    
+    </div>
+  </form>
+  {% endblock %}
+</body>
+</html>
